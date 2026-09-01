@@ -168,6 +168,30 @@ export const CASES: CaseStudy[] = [
       label: "Browse 25 of my public commits on the School Portal site",
     },
   },
+  {
+    id: "freelance-qa",
+    title: "Freelance QA and website testing",
+    scope: "BEFORE BMG",
+    tagline: "2023 to 2024, before I moved into building",
+    tags: ["Manual testing", "Cross-browser", "Defect reporting"],
+    body:
+      "Tested websites and web platforms for clients and reported defects against them. This is where the habits came from: assume the edge cases are broken until you have checked them, and describe a problem precisely enough that someone else can act on it.",
+    points: [
+      {
+        lead: "Functional and exploratory testing",
+        text: "across browsers, screen sizes and devices.",
+      },
+      {
+        lead: "Reproducible bug reports",
+        text:
+          "with steps, expected versus actual behaviour, environment and severity, so an issue could be fixed without a second conversation.",
+      },
+      {
+        text:
+          "Responsive, broken-state and form-validation checks, then re-testing after fixes to confirm the fix held and nothing else moved.",
+      },
+    ],
+  },
 ];
 
 export const SKILLS: SkillGroup[] = [
@@ -187,7 +211,7 @@ export const SKILLS: SkillGroup[] = [
 ];
 
 export const ABOUT_PARAGRAPHS = [
-  "I studied Aerospace Engineering and graduated with First Class Honours, then moved into software. The habits carried over: work from evidence rather than intuition, respect the failure cases, and treat a thing as unfinished until the edges are handled.",
+  "I studied Aerospace Engineering and graduated with First Class Honours, then came into software through QA, testing websites and platforms and writing bug reports before I started building them. The habits carried over: work from evidence rather than intuition, respect the failure cases, and treat a thing as unfinished until the edges are handled.",
   "In practice that means I care about the parts that rarely get demoed. Empty states. Loading skeletons. Error copy that tells you what to do next. What the screen does on a slow connection, which where I work is not a hypothetical.",
   "I build for a multi-tenant CRM used by businesses across many industries, and for school management systems where a mistake in a results screen matters to somebody's child. That keeps me honest about correctness.",
 ];
@@ -199,6 +223,11 @@ export const FACTS: Fact[] = [
     term: "Education",
     value: "B.Eng Aerospace Engineering",
     note: "Air Force Institute of Technology, Kaduna. First Class Honours, 2024",
+  },
+  {
+    term: "Before that",
+    value: "Freelance QA and website testing",
+    note: "Manual testing and defect reporting for client websites and platforms, 2023 to 2024",
   },
   { term: "Based in", value: "Abuja, Nigeria (UTC+1)", note: "Open to relocation" },
 ];
