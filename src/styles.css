@@ -235,10 +235,10 @@ h4 { margin: 0; font-family: var(--sans); }
 /* ============================================================
    Sections
    ============================================================ */
-section { padding: clamp(60px, 7.5vw, 100px) 0; scroll-margin-top: var(--nav-h); }
-.sec-head { margin-bottom: clamp(30px, 4vw, 44px); }
+section { padding: clamp(44px, 4.8vw, 64px) 0; scroll-margin-top: var(--nav-h); }
+.sec-head { margin-bottom: clamp(24px, 3vw, 34px); }
 .sec-head .eyebrow { color: var(--accent); display: block; margin-bottom: 12px; }
-.sec-note { color: var(--muted); max-width: 60ch; margin: 14px 0 clamp(32px, 5vw, 50px); font-size: 1.03rem; }
+.sec-note { color: var(--muted); max-width: 60ch; margin: 14px 0 0; font-size: 1.03rem; }
 
 /* ============================================================
    Work slider — native scroll-snap, no carousel library
