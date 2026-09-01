@@ -36,6 +36,7 @@ export interface Fact {
 }
 
 export const NAV_SECTIONS = [
+  { id: "top", label: "Home" },
   { id: "work", label: "Work" },
   { id: "skills", label: "Skills" },
   { id: "about", label: "About" },

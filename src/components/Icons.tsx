@@ -67,3 +67,28 @@ export const GitHub = ({ size = 15, className }: IconProps) => (
     <path d="M12 1.8a10.2 10.2 0 0 0-3.2 19.9c.5.1.7-.2.7-.5v-1.9c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.4 1.1 3 .8.1-.7.4-1.1.6-1.4-2.3-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10.2 10.2 0 0 0 12 1.8" />
   </svg>
 );
+
+export const Menu = ({ size = 18, className }: IconProps) => (
+  <svg {...base(size)} {...stroke} strokeWidth={2.1} className={className}>
+    <path d="M3.5 7h17M3.5 12h17M3.5 17h17" />
+  </svg>
+);
+
+export const Close = ({ size = 18, className }: IconProps) => (
+  <svg {...base(size)} {...stroke} strokeWidth={2.1} className={className}>
+    <path d="M5.5 5.5l13 13M18.5 5.5l-13 13" />
+  </svg>
+);
+
+export const Play = ({ size = 15, className }: IconProps) => (
+  <svg {...base(size)} fill="currentColor" className={className}>
+    <path d="M8 5.2l11 6.8-11 6.8z" />
+  </svg>
+);
+
+export const Pause = ({ size = 15, className }: IconProps) => (
+  <svg {...base(size)} fill="currentColor" className={className}>
+    <rect x="7" y="5" width="3.4" height="14" rx="1.1" />
+    <rect x="13.6" y="5" width="3.4" height="14" rx="1.1" />
+  </svg>
+);

@@ -2,12 +2,19 @@ import type { KeyboardEvent } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CaseStudy } from "../lib/content";
 import { CASES } from "../lib/content";
-import { ArrowRight, Check } from "./Icons";
+import { ArrowRight, Check, Pause, Play } from "./Icons";
 import { Reveal } from "./Reveal";
+
+/** How long each slide holds before advancing. */
+const DWELL_MS = 6500;
 
 function Slide({ study, index }: { study: CaseStudy; index: number }) {
   return (
-    <article className="slide" aria-roledescription="slide" aria-label={`${index + 1} of ${CASES.length}: ${study.title}`}>
+    <article
+      className="slide"
+      aria-roledescription="slide"
+      aria-label={`${index + 1} of ${CASES.length}: ${study.title}`}
+    >
       <div className="slide-head">
         <span className="slide-num">{String(index + 1).padStart(2, "0")}</span>
         <span className="case-scope eyebrow">{study.scope}</span>
@@ -66,19 +73,36 @@ function Slide({ study, index }: { study: CaseStudy; index: number }) {
 export function Work() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
+  /** User pressed pause, or took manual control of the slider. */
+  const [playing, setPlaying] = useState(true);
+  /** Transient pause: pointer over the slider, focus inside it, or tab hidden. */
+  const [held, setHeld] = useState(false);
   const count = CASES.length;
 
-  const goTo = useCallback((i: number) => {
-    const track = trackRef.current;
-    if (!track) return;
-    const clamped = Math.max(0, Math.min(count - 1, i));
-    const slide = track.children[clamped] as HTMLElement | undefined;
-    if (!slide) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    track.scrollTo({ left: slide.offsetLeft, behavior: reduce ? "auto" : "smooth" });
-  }, [count]);
+  const scrollToIndex = useCallback(
+    (i: number) => {
+      const track = trackRef.current;
+      if (!track) return;
+      const clamped = ((i % count) + count) % count;
+      const slide = track.children[clamped] as HTMLElement | undefined;
+      if (!slide) return;
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      track.scrollTo({ left: slide.offsetLeft, behavior: reduce ? "auto" : "smooth" });
+    },
+    [count],
+  );
 
-  // Derive the active slide from scroll position, so swipes and arrows agree.
+  /** Navigation the user asked for: stops autoplay for good. */
+  const goTo = useCallback(
+    (i: number) => {
+      setPlaying(false);
+      scrollToIndex(Math.max(0, Math.min(count - 1, i)));
+    },
+    [count, scrollToIndex],
+  );
+
+  // Derive the active slide from scroll position, so swipes, arrows, dots and
+  // autoplay never disagree about where we are.
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
@@ -91,8 +115,7 @@ export function Work() {
         let nearest = 0;
         let best = Infinity;
         slides.forEach((s, i) => {
-          const centre = s.offsetLeft + s.offsetWidth / 2;
-          const d = Math.abs(centre - mid);
+          const d = Math.abs(s.offsetLeft + s.offsetWidth / 2 - mid);
           if (d < best) {
             best = d;
             nearest = i;
@@ -107,6 +130,21 @@ export function Work() {
       cancelAnimationFrame(frame);
       track.removeEventListener("scroll", onScroll);
     };
+  }, []);
+
+  // Autoplay: schedule the next advance whenever the active slide settles.
+  useEffect(() => {
+    if (!playing || held) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const t = window.setTimeout(() => scrollToIndex(active + 1), DWELL_MS);
+    return () => window.clearTimeout(t);
+  }, [active, playing, held, scrollToIndex]);
+
+  // Do not animate against a tab nobody is looking at.
+  useEffect(() => {
+    const onVis = () => setHeld(document.hidden);
+    document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
   }, []);
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -158,6 +196,14 @@ export function Work() {
             <div className="slider-arrows">
               <button
                 type="button"
+                className="icon-btn slider-play"
+                onClick={() => setPlaying((v) => !v)}
+                aria-label={playing ? "Pause automatic sliding" : "Play automatic sliding"}
+              >
+                {playing ? <Pause /> : <Play />}
+              </button>
+              <button
+                type="button"
                 className="icon-btn arrow-prev"
                 onClick={() => goTo(active - 1)}
                 disabled={active === 0}
@@ -185,6 +231,11 @@ export function Work() {
             aria-roledescription="carousel"
             aria-label="Selected work"
             onKeyDown={onKeyDown}
+            onMouseEnter={() => setHeld(true)}
+            onMouseLeave={() => setHeld(false)}
+            onFocus={() => setHeld(true)}
+            onBlur={() => setHeld(false)}
+            onPointerDown={() => setPlaying(false)}
           >
             {CASES.map((study, i) => (
               <Slide study={study} index={i} key={study.id} />
