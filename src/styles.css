@@ -147,6 +147,17 @@ h4 { margin: 0; font-family: var(--sans); }
 .nav-links a[data-active="true"]::after { transform: scaleX(1); }
 @media (max-width: 760px) { .nav-links { display: none; } }
 
+/* ---- icon buttons: theme toggle, hamburger, slider controls ---- */
+.icon-btn {
+  width: 38px; height: 38px; flex: none; padding: 0;
+  border: 1px solid var(--line); background: var(--bg-elev);
+  border-radius: 11px; cursor: pointer; color: var(--muted);
+  display: grid; place-items: center;
+  transition: color 0.16s ease, border-color 0.16s ease, background 0.16s ease, transform 0.16s ease;
+}
+.icon-btn:hover { color: var(--brand-ink); border-color: var(--line-2); transform: translateY(-1px); }
+.icon-btn svg { display: block; }
+
 /* ---- mobile menu: full-height drawer from the right ---- */
 .nav-toggle { display: none; }
 @media (max-width: 760px) { .nav-toggle { display: grid; } }
