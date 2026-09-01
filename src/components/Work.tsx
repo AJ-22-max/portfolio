@@ -77,6 +77,8 @@ export function Work() {
   const [playing, setPlaying] = useState(true);
   /** Transient pause: pointer over the slider, focus inside it, or tab hidden. */
   const [held, setHeld] = useState(false);
+  /** Track height follows the active slide so short cards leave no dead space. */
+  const [trackH, setTrackH] = useState<number | undefined>(undefined);
   const count = CASES.length;
 
   const scrollToIndex = useCallback(
@@ -140,6 +142,25 @@ export function Work() {
     return () => window.clearTimeout(t);
   }, [active, playing, held, scrollToIndex]);
 
+  // Size the track to whichever slide is showing. ResizeObserver keeps it
+  // honest when fonts load, text reflows, or the viewport changes.
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const measure = () => {
+      const slide = track.children[active] as HTMLElement | undefined;
+      if (slide) setTrackH(slide.offsetHeight);
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    Array.from(track.children).forEach((c) => ro.observe(c));
+    window.addEventListener("resize", measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [active]);
+
   // Do not animate against a tab nobody is looking at.
   useEffect(() => {
     const onVis = () => setHeld(document.hidden);
@@ -171,6 +192,26 @@ export function Work() {
         </Reveal>
 
         <Reveal className="slider">
+          <div
+            className="slider-track"
+            ref={trackRef}
+            tabIndex={0}
+            role="group"
+            aria-roledescription="carousel"
+            aria-label="Selected work"
+            onKeyDown={onKeyDown}
+            onMouseEnter={() => setHeld(true)}
+            onMouseLeave={() => setHeld(false)}
+            onFocus={() => setHeld(true)}
+            onBlur={() => setHeld(false)}
+            onPointerDown={() => setPlaying(false)}
+            style={trackH ? { height: trackH } : undefined}
+          >
+            {CASES.map((study, i) => (
+              <Slide study={study} index={i} key={study.id} />
+            ))}
+          </div>
+
           <div className="slider-bar">
             <span className="slider-count">
               <b>{String(active + 1).padStart(2, "0")}</b>
@@ -221,25 +262,6 @@ export function Work() {
                 <ArrowRight size={16} />
               </button>
             </div>
-          </div>
-
-          <div
-            className="slider-track"
-            ref={trackRef}
-            tabIndex={0}
-            role="group"
-            aria-roledescription="carousel"
-            aria-label="Selected work"
-            onKeyDown={onKeyDown}
-            onMouseEnter={() => setHeld(true)}
-            onMouseLeave={() => setHeld(false)}
-            onFocus={() => setHeld(true)}
-            onBlur={() => setHeld(false)}
-            onPointerDown={() => setPlaying(false)}
-          >
-            {CASES.map((study, i) => (
-              <Slide study={study} index={i} key={study.id} />
-            ))}
           </div>
         </Reveal>
       </div>
