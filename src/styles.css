@@ -41,28 +41,6 @@
   --sans: "Gilroy", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0d1117;
-    --bg-tint: #111823;
-    --bg-elev: #141c27;
-    --fg: #eef4f7;
-    --fg-2: #c2ccd6;
-    --muted: #8d959f;
-    --line: #1f2a36;
-    --line-2: #2a3846;
-    --brand: #7d8bff;
-    --brand-ink: #96a2ff;
-    --brand-soft: #151a3a;
-    --accent: #4fb9ef;
-    --accent-soft: #10222f;
-    --amber-soft: #2a1f0d;
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
-    --shadow: 0 2px 6px rgba(0, 0, 0, 0.5), 0 14px 34px -18px rgba(0, 0, 0, 0.8);
-    --shadow-lg: 0 4px 10px rgba(0, 0, 0, 0.55), 0 34px 70px -28px rgba(0, 0, 0, 0.85);
-  }
-}
-
 :root[data-theme="dark"] {
   --bg: #0d1117;
   --bg-tint: #111823;
@@ -151,8 +129,7 @@ h4 { margin: 0; font-family: var(--sans); }
   color: #fff; display: grid; place-items: center;
   font-family: var(--serif); font-weight: 600; font-size: 14px; letter-spacing: 0.01em;
 }
-:root[data-theme="dark"] .brand-mark,
-:root:not([data-theme="light"]) .brand-mark { color: #fff; }
+:root[data-theme="dark"] .brand-mark { color: #fff; }
 .brand-name { font-weight: 600; font-size: 1rem; letter-spacing: -0.01em; }
 
 .nav-links { display: flex; gap: 2px; }
@@ -195,8 +172,7 @@ h4 { margin: 0; font-family: var(--sans); }
   background: var(--navy); border-color: var(--navy); color: #fff;
 }
 .btn-primary:hover { box-shadow: 0 14px 30px -12px rgba(8, 12, 150, 0.55); }
-:root[data-theme="dark"] .btn-primary,
-:root:not([data-theme="light"]) .btn-primary { background: var(--brand); border-color: var(--brand); color: #0b1020; }
+:root[data-theme="dark"] .btn-primary { background: var(--brand); border-color: var(--brand); color: #0b1020; }
 
 /* ============================================================
    Hero
@@ -265,30 +241,53 @@ section { padding: clamp(60px, 7.5vw, 100px) 0; scroll-margin-top: var(--nav-h);
 .sec-note { color: var(--muted); max-width: 60ch; margin: 14px 0 clamp(32px, 5vw, 50px); font-size: 1.03rem; }
 
 /* ============================================================
-   Case studies — typographic, no client imagery
+   Work slider — native scroll-snap, no carousel library
    ============================================================ */
-.cases { border-top: 1px solid var(--line); }
-.case {
-  display: grid; grid-template-columns: 88px minmax(0, 1fr) minmax(0, 0.85fr);
-  gap: clamp(18px, 3vw, 40px); padding: clamp(30px, 4vw, 46px) 0;
-  border-bottom: 1px solid var(--line); align-items: start;
-  transition: background 0.2s ease;
-}
-.case:hover { background: var(--bg-tint); }
-@media (max-width: 900px) {
-  .case { grid-template-columns: 1fr; gap: 14px; }
-  .case:hover { background: transparent; }
-}
+.slider-bar { display: flex; align-items: center; gap: 18px; margin-bottom: 18px; }
+.slider-count { font-family: var(--serif); font-size: 1.05rem; color: var(--muted); flex: none; }
+.slider-count b { color: var(--fg); font-weight: 600; }
+.slider-sep { margin: 0 6px; color: var(--line-2); }
 
-.case-num {
-  font-family: var(--serif); font-size: 2rem; font-weight: 500; line-height: 1;
+.slider-dots { display: flex; gap: 7px; margin-right: auto; }
+.dot {
+  width: 9px; height: 9px; padding: 0; border-radius: 999px; cursor: pointer;
+  border: 0; background: var(--line-2);
+  transition: background 0.2s ease, width 0.24s ease;
+}
+.dot[data-on="true"] { background: var(--accent); width: 26px; }
+.dot:hover { background: var(--brand-ink); }
+
+.slider-arrows { display: flex; gap: 8px; flex: none; }
+.arrow-prev svg { transform: rotate(180deg); }
+.icon-btn:disabled { opacity: 0.35; cursor: default; transform: none; }
+.icon-btn:disabled:hover { color: var(--muted); border-color: var(--line); transform: none; }
+
+.slider-track {
+  display: flex; gap: clamp(14px, 2vw, 22px);
+  overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scroll-padding-left: 0;
+  padding: 4px 0 16px;
+  scrollbar-width: none;
+}
+.slider-track::-webkit-scrollbar { display: none; }
+.slider-track:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: var(--r); }
+
+.slide {
+  flex: 0 0 min(100%, 660px); scroll-snap-align: start;
+  background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--r-lg);
+  padding: clamp(24px, 3.4vw, 38px); box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.22s ease, border-color 0.22s ease;
+}
+.slide:hover { box-shadow: var(--shadow); border-color: var(--line-2); }
+@media (min-width: 1040px) { .slide { flex-basis: 620px; } }
+
+.slide-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.slide-num {
+  font-family: var(--serif); font-size: 1.9rem; font-weight: 500; line-height: 1;
   color: var(--line-2); letter-spacing: -0.02em;
 }
-.case:hover .case-num { color: var(--accent); }
-@media (max-width: 900px) { .case-num { font-size: 1.3rem; } }
-
-.case-scope { color: var(--accent); display: block; margin-bottom: 9px; }
-.case h3 { margin-bottom: 8px; }
+.case-scope { color: var(--accent); }
+.slide h3 { margin-bottom: 8px; }
 .case-tagline { color: var(--muted); font-size: 0.92rem; margin: 0 0 16px; }
 .case-body { margin: 0; color: var(--fg-2); }
 .case-body strong { color: var(--fg); font-weight: 600; }
@@ -311,8 +310,7 @@ section { padding: clamp(60px, 7.5vw, 100px) 0; scroll-margin-top: var(--nav-h);
   background: var(--bg-tint); border: 1px solid var(--line);
   padding: 5px 11px; border-radius: 999px; white-space: nowrap;
 }
-:root[data-theme="dark"] .tag,
-:root:not([data-theme="light"]) .tag { background: var(--bg-elev); }
+:root[data-theme="dark"] .tag { background: var(--bg-elev); }
 
 /* ============================================================
    Skills

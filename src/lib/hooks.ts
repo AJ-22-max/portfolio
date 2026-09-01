@@ -2,9 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 type Theme = "light" | "dark";
 
-const prefersDark = () =>
-  typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches;
-
 const readStored = (): Theme | null => {
   try {
     const v = localStorage.getItem("theme");
@@ -15,21 +12,12 @@ const readStored = (): Theme | null => {
 };
 
 /**
- * Theme is tri-state: no explicit choice means follow the system.
- * Once the user toggles, the choice is stamped on <html> and persisted.
+ * Light is the default. The system preference is deliberately not followed:
+ * the palette is built around the light brand colours, so dark is opt-in and
+ * remembered once chosen.
  */
 export function useTheme() {
-  const [theme, setTheme] = useState<Theme>(() => readStored() ?? (prefersDark() ? "dark" : "light"));
-  const [explicit, setExplicit] = useState<boolean>(() => readStored() !== null);
-
-  // Follow the system while the user has not made an explicit choice.
-  useEffect(() => {
-    if (explicit) return;
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    const onChange = (e: MediaQueryListEvent) => setTheme(e.matches ? "dark" : "light");
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, [explicit]);
+  const [theme, setTheme] = useState<Theme>(() => readStored() ?? "light");
 
   const toggle = useCallback(() => {
     setTheme((prev) => {
@@ -42,7 +30,6 @@ export function useTheme() {
       }
       return next;
     });
-    setExplicit(true);
   }, []);
 
   return { theme, toggle };
