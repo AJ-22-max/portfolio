@@ -7,12 +7,13 @@ export function Contact() {
     <section id="contact">
       <div className="wrap">
         <Reveal className="contact-card">
+          <span className="eyebrow">Contact</span>
           <h2>Let's talk</h2>
           <p>
             I am open to frontend and software engineering roles, and happy to walk through any of
             the work above on a call.
           </p>
-          <div className="cta">
+          <div className="contact-cta">
             <a className="btn btn-primary" href={`mailto:${PROFILE.email}`}>
               <Mail />
               {PROFILE.email}
@@ -39,7 +40,7 @@ export function Footer() {
         <span>
           {PROFILE.name}, {PROFILE.role}
         </span>
-        <span>Built with React, TypeScript and Vite. No UI framework.</span>
+        <span>Built with React, TypeScript and Vite</span>
       </div>
     </footer>
   );

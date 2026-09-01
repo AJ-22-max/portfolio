@@ -12,6 +12,8 @@ export interface Stat {
 export interface CaseStudy {
   id: string;
   title: string;
+  /** Short context label shown next to the index number. */
+  scope: string;
   tagline: string;
   tags: string[];
   /** Lead paragraph. `strong` markup is applied via the `emphasis` list below. */
@@ -20,7 +22,6 @@ export interface CaseStudy {
   outcome?: string;
   outcomeLead?: string;
   link?: { href: string; label: string };
-  featured?: boolean;
 }
 
 export interface SkillGroup {
@@ -67,9 +68,9 @@ export const CASES: CaseStudy[] = [
   {
     id: "invoice-editor",
     title: "Invoice editor",
+    scope: "BMG CRM",
     tagline: "The highest-traffic screen in a multi-tenant CRM",
     tags: ["React 18", "MUI", "TanStack Query"],
-    featured: true,
     body:
       "Businesses issue invoices with different tax structures, and they want the document to look like it came from them rather than from our software. The editor had to be usable by people who do not think in terms of tax models.",
     points: [
@@ -93,6 +94,7 @@ export const CASES: CaseStudy[] = [
   {
     id: "session-setup",
     title: "Session setup",
+    scope: "SCHOOL DASHBOARD",
     tagline: "School management dashboard",
     tags: ["TypeScript", "React"],
     body:
@@ -107,6 +109,7 @@ export const CASES: CaseStudy[] = [
   {
     id: "attachments",
     title: "Attachments and previews",
+    scope: "BMG CRM",
     tagline: "BMG CRM",
     tags: ["React 18", "MUI"],
     body:
@@ -122,6 +125,7 @@ export const CASES: CaseStudy[] = [
   {
     id: "id-cards",
     title: "ID card designer",
+    scope: "SCHOOL DASHBOARD",
     tagline: "School management dashboard",
     tags: ["TypeScript", "React"],
     body:
@@ -137,6 +141,7 @@ export const CASES: CaseStudy[] = [
   {
     id: "performance",
     title: "Dashboard performance",
+    scope: "BMG CRM",
     tagline: "BMG CRM",
     tags: ["Vite", "Asset pipeline"],
     body:
@@ -151,6 +156,7 @@ export const CASES: CaseStudy[] = [
   {
     id: "client-sites",
     title: "Client web applications",
+    scope: "CLIENT WORK",
     tagline: "Marvel Jeb Co. Ltd, Fidei Polytechnic, Pamsette Primary School, School Portal",
     tags: ["TypeScript", "Vite", "Tailwind", "Framer Motion"],
     body:

@@ -1,16 +1,18 @@
 import type { CaseStudy } from "../lib/content";
 import { CASES } from "../lib/content";
-import { Bolt, Check } from "./Icons";
+import { Check } from "./Icons";
 import { Reveal } from "./Reveal";
 
-function Case({ study }: { study: CaseStudy }) {
+function Case({ study, index }: { study: CaseStudy; index: number }) {
   return (
-    <Reveal as="article" className={`case ${study.featured ? "case-feature" : ""}`.trim()}>
-      <div className="case-top">
-        <div>
-          <h3>{study.title}</h3>
-          <p className="tagline">{study.tagline}</p>
-        </div>
+    <Reveal as="article" className="case">
+      <div className="case-num">{String(index + 1).padStart(2, "0")}</div>
+
+      <div>
+        <span className="case-scope eyebrow">{study.scope}</span>
+        <h3>{study.title}</h3>
+        <p className="case-tagline">{study.tagline}</p>
+        <p className="case-body">{study.body}</p>
         <div className="tags">
           {study.tags.map((tag) => (
             <span className="tag" key={tag}>
@@ -20,80 +22,63 @@ function Case({ study }: { study: CaseStudy }) {
         </div>
       </div>
 
-      <p className="case-body">{study.body}</p>
+      <div>
+        {study.points.length > 0 && (
+          <ul className="detail">
+            {study.points.map((point, i) => (
+              <li key={i}>
+                <Check size={16} className="tick" />
+                <span>
+                  {point.lead && <b>{point.lead} </b>}
+                  {point.text}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
 
-      {study.points.length > 0 && (
-        <ul className="detail">
-          {study.points.map((point, i) => (
-            <li key={i}>
-              <Check className="tick" />
+        {study.link && (
+          <ul className="detail">
+            <li>
+              <Check size={16} className="tick" />
               <span>
-                {point.lead && <b>{point.lead} </b>}
-                {point.text}
+                <a href={study.link.href} rel="noopener noreferrer" target="_blank">
+                  {study.link.label}
+                </a>
+                , if you would rather read the code than take my word for it.
               </span>
             </li>
-          ))}
-        </ul>
-      )}
+          </ul>
+        )}
 
-      {study.link && (
-        <ul className="detail">
-          <li>
-            <Check className="tick" />
-            <span>
-              <a href={study.link.href} rel="noopener noreferrer" target="_blank">
-                {study.link.label}
-              </a>
-              , if you would rather read the code than take my word for it.
-            </span>
-          </li>
-        </ul>
-      )}
-
-      {study.outcome && (
-        <div className="outcome">
-          <Bolt />
-          <span>
+        {study.outcome && (
+          <p className="outcome">
             {study.outcomeLead && <b>{study.outcomeLead}</b>}
             {study.outcome}
-          </span>
-        </div>
-      )}
+          </p>
+        )}
+      </div>
     </Reveal>
   );
 }
 
 export function Work() {
-  const [featured, ...rest] = CASES;
-  // Pair the middle four into two-up rows, keep the last one full width.
-  const paired = rest.slice(0, 4);
-  const trailing = rest.slice(4);
-
   return (
     <section id="work">
       <div className="wrap">
-        <Reveal className="sec-head">
-          <p className="sec-label">Selected work</p>
+        <Reveal as="div" className="sec-head">
+          <span className="eyebrow">Selected work</span>
           <h2>Features I designed, built and shipped</h2>
-          <p>
-            Most of this code is in private company repositories, so here is what I built and the
-            reasoning behind it. I am happy to walk through any of it live.
+          <p className="sec-note">
+            This work belongs to my employer and their clients, so there are no screenshots here.
+            What follows is what I built, the problem it solved, and the reasoning behind it. I am
+            happy to walk through any of it on a call.
           </p>
         </Reveal>
 
-        <div className="work">
-          <Case study={featured} />
-
-          {[0, 2].map((start) => (
-            <div className="pair" key={start}>
-              {paired.slice(start, start + 2).map((study) => (
-                <Case study={study} key={study.id} />
-              ))}
-            </div>
-          ))}
-
-          {trailing.map((study) => (
-            <Case study={study} key={study.id} />
+        <div className="cases">
+          {CASES.map((study, i) => (
+            <Case study={study} index={i} key={study.id} />
           ))}
         </div>
       </div>

@@ -3,27 +3,37 @@ import { ArrowRight, Download, GitHub } from "./Icons";
 import { Reveal } from "./Reveal";
 
 export function Hero() {
+  const [first, ...rest] = PROFILE.name.split(" ");
+
   return (
     <header className="hero" id="top">
-      <div className="hero-grid" aria-hidden="true" />
-      <div className="wrap">
-        <div className="hero-inner">
+      <div className="hero-bg" aria-hidden="true" />
+            <div className="wrap">
+        <div className="hero-top">
           <div>
-            <span className="eyebrow">
-              <span className="dot" aria-hidden="true" />
+            <span className="status eyebrow">
+              <span className="pulse" aria-hidden="true">
+                <span />
+                <span />
+              </span>
               {PROFILE.availability}
             </span>
 
-            <h1>{PROFILE.name}</h1>
+            <h1>
+              {first} <span className="surname">{rest.join(" ")}</span>
+            </h1>
 
-            <p className="role">
+            <p className="hero-role">
               <b>{PROFILE.role}</b>
-              {PROFILE.roleSuffix}
+              <span className="sep">/</span>
+              React + TypeScript
+              <span className="sep">/</span>
+              {PROFILE.location}
             </p>
 
-            <p className="lede">{PROFILE.lede}</p>
+            <p className="hero-lede">{PROFILE.lede}</p>
 
-            <div className="cta">
+            <div className="hero-cta">
               <a className="btn btn-primary" href="#work">
                 See my work
                 <ArrowRight />
@@ -43,18 +53,18 @@ export function Hero() {
             <img
               src={PROFILE.photo}
               alt={`Portrait of ${PROFILE.name}`}
-              width={224}
-              height={224}
+              width={232}
+              height={264}
               fetchPriority="high"
             />
           </div>
         </div>
 
-        <Reveal className="stats">
+        <Reveal className="facts-row">
           {STATS.map((stat) => (
-            <div className="stat" key={stat.label}>
-              <span className="stat-n">{stat.accent ? <em>{stat.value}</em> : stat.value}</span>
-              <span className="stat-l">{stat.label}</span>
+            <div className="fact-cell" key={stat.label}>
+              <span className="fact-n">{stat.accent ? <em>{stat.value}</em> : stat.value}</span>
+              <span className="fact-l">{stat.label}</span>
             </div>
           ))}
         </Reveal>

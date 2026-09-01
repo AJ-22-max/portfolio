@@ -2,17 +2,20 @@ import { ABOUT_PARAGRAPHS, FACTS } from "../lib/content";
 import { Reveal } from "./Reveal";
 
 export function About() {
+  const [lead, ...rest] = ABOUT_PARAGRAPHS;
+
   return (
     <section id="about">
       <div className="wrap">
-        <Reveal className="sec-head">
-          <p className="sec-label">About</p>
+        <Reveal as="div" className="sec-head">
+          <span className="eyebrow">About</span>
           <h2>Engineering habits, applied to interfaces</h2>
         </Reveal>
 
         <Reveal className="about">
           <div>
-            {ABOUT_PARAGRAPHS.map((text, i) => (
+            <p className="about-lead">{lead}</p>
+            {rest.map((text, i) => (
               <p key={i}>{text}</p>
             ))}
             <p>
@@ -20,14 +23,12 @@ export function About() {
             </p>
           </div>
 
-          <dl className="facts">
+          <dl className="timeline">
             {FACTS.map((fact) => (
-              <div className="fact" key={fact.term}>
-                <dt>{fact.term}</dt>
-                <dd>
-                  {fact.value}
-                  <span>{fact.note}</span>
-                </dd>
+              <div className="tl-item" key={fact.term}>
+                <dt className="tl-term eyebrow">{fact.term}</dt>
+                <dd className="tl-val">{fact.value}</dd>
+                <dd className="tl-note">{fact.note}</dd>
               </div>
             ))}
           </dl>

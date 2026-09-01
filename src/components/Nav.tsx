@@ -13,10 +13,10 @@ export function Nav() {
     <nav className="nav" data-stuck={stuck}>
       <div className="wrap nav-in">
         <a className="brand" href="#top">
-          <span className="mono" aria-hidden="true">
+          <span className="brand-mark" aria-hidden="true">
             JA
           </span>
-          {PROFILE.name}
+          <span className="brand-name">{PROFILE.name}</span>
         </a>
 
         <div className="nav-links">
@@ -34,7 +34,7 @@ export function Nav() {
 
         <button
           type="button"
-          className="theme-btn"
+          className="icon-btn"
           onClick={toggle}
           aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
         >
