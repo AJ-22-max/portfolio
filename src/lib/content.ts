@@ -53,7 +53,7 @@ export const PROFILE = {
   githubLabel: "github.com/AJ-22-max",
   cv: "/Juliet-Ada-Adue-CV.pdf",
   photo: "/photo.jpg",
-  availability: "Open to new roles",
+  availability: "Open to roles · relocating to Canada",
   lede:
     "I build the parts of software people actually touch: dashboards, editors, onboarding flows, and the small interactions that decide whether a product feels finished. I own features end to end, from interaction design through to QA and client feedback.",
 };
@@ -90,12 +90,17 @@ export const CASES: CaseStudy[] = [
         text:
           "Making it obvious what is editable on a small screen, where hover cannot do that work for you.",
       },
+      {
+        lead: "Multi-currency.",
+        text:
+          "Currency derives from the business and the document rather than the viewer's location, enforced through a formatting helper that requires an explicit currency — removing a class of financial display bugs.",
+      },
     ],
   },
   {
     id: "session-setup",
     title: "Session setup",
-    scope: "SCHOOL DASHBOARD",
+    scope: "ADVANZTEK NIG. LTD",
     tagline: "School management dashboard",
     tags: ["TypeScript", "React"],
     body:
@@ -124,9 +129,27 @@ export const CASES: CaseStudy[] = [
     ],
   },
   {
+    id: "boards",
+    title: "Project and task boards",
+    scope: "BMG CRM",
+    tagline: "BMG CRM",
+    tags: ["React 18", "dnd-kit"],
+    body:
+      "Drag-and-drop boards for projects and tasks, where the drag has to feel right and the data has to stay correct when a card lands somewhere new.",
+    points: [
+      {
+        text:
+          "Multi-select assignees, date-range filtering and archiving, so a busy board narrows to what matters now.",
+      },
+      {
+        text: "Built the admin acquisition-channel reporting view and its data-fetching layer alongside it.",
+      },
+    ],
+  },
+  {
     id: "id-cards",
     title: "ID card designer",
-    scope: "SCHOOL DASHBOARD",
+    scope: "ADVANZTEK NIG. LTD",
     tagline: "School management dashboard",
     tags: ["TypeScript", "React"],
     body:
@@ -150,6 +173,7 @@ export const CASES: CaseStudy[] = [
     points: [
       { text: "Recompressed them while preserving transparency where the design needed it." },
       { text: "Added preconnect hints so the browser opens the media-host connection early." },
+      { text: "Rebuilt both BMG marketing sites from scratch and cut the About imagery from roughly 8.9 MB to 340 KB." },
     ],
     outcomeLead: "~90% smaller",
     outcome: " image payloads, with no visible quality loss.",
@@ -217,17 +241,21 @@ export const ABOUT_PARAGRAPHS = [
 ];
 
 export const FACTS: Fact[] = [
-  { term: "Now", value: "Frontend Engineer, BMG", note: "Multi-tenant CRM and commerce SaaS" },
-  { term: "Also", value: "Frontend Engineer, SchoolPortal", note: "School management platform" },
+  { term: "Now", value: "Frontend Engineer, BMG", note: "Multi-tenant CRM and commerce SaaS · since Jan 2026" },
+  {
+    term: "Before",
+    value: "Frontend Developer, Advanztek Nig. Ltd",
+    note: "School management dashboard · 2024 to 2025",
+  },
+  {
+    term: "Earlier",
+    value: "Freelance QA and website testing",
+    note: "Manual testing and defect reporting for client websites and platforms, 2023 to 2024",
+  },
   {
     term: "Education",
     value: "B.Eng Aerospace Engineering",
     note: "Air Force Institute of Technology, Kaduna. First Class Honours, 2024",
   },
-  {
-    term: "Before that",
-    value: "Freelance QA and website testing",
-    note: "Manual testing and defect reporting for client websites and platforms, 2023 to 2024",
-  },
-  { term: "Based in", value: "Abuja, Nigeria (UTC+1)", note: "Open to relocation" },
+  { term: "Based in", value: "Abuja, Nigeria (UTC+1)", note: "Open to relocation to Canada (VanHack)" },
 ];
