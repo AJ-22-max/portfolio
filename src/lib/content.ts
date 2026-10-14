@@ -300,7 +300,7 @@ export const FACTS: Fact[] = [
   {
     term: "Before",
     value: "Frontend Developer, Advanztek Nig. Ltd",
-    note: "School management dashboard · 2024 to 2025",
+    note: "School management dashboard · 2023 to 2025",
   },
   {
     term: "Earlier",
