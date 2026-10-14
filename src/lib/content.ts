@@ -60,7 +60,7 @@ export const PROFILE = {
 
 export const STATS: Stat[] = [
   { value: "~90%", accent: true, label: "Reduction in image payload on the dashboard" },
-  { value: "6", label: "Production applications shipped" },
+  { value: "7", label: "Production applications shipped" },
   { value: "21", label: "Industries served by the CRM I build on" },
   { value: "First Class", label: "B.Eng Aerospace Engineering" },
 ];
@@ -179,6 +179,57 @@ export const CASES: CaseStudy[] = [
     outcome: " image payloads, with no visible quality loss.",
   },
   {
+    id: "rem-church",
+    title: "REM Church",
+    scope: "FULL-STACK — FREELANCE",
+    tagline: "A church platform with online giving, built end to end",
+    tags: ["React 19", "TypeScript", "Neon Postgres", "Paystack"],
+    body:
+      "A multi-section church and community platform — sermons, devotionals, events, branches, livestream, gallery, news and prayer requests — built as a full-stack project: a React and TypeScript frontend with a serverless backend on Neon Postgres.",
+    points: [
+      {
+        lead: "Online giving.",
+        text:
+          "Paystack payments with server-side webhooks, so a gift is recorded only once the money actually clears.",
+      },
+      {
+        lead: "Content-managed.",
+        text:
+          "An admin dashboard edits the homepage, uploads media, reads the message inbox and controls the livestream, so the church runs the site without touching code.",
+      },
+      {
+        lead: "Shipped.",
+        text:
+          "Authentication and file uploads handled in the serverless API, deployed on Vercel with push-to-deploy.",
+      },
+    ],
+  },
+  {
+    id: "virtuous-woman-couture",
+    title: "Virtuous Woman Couture",
+    scope: "E-COMMERCE — FREELANCE",
+    tagline: "A premium fashion storefront in React and TypeScript",
+    tags: ["React 19", "TypeScript", "Context API", "Vite"],
+    body:
+      "An e-commerce storefront for made-to-measure fashion: a catalog you can filter, search and sort, product pages with colour, size and made-to-measure selection, and a cart and checkout built on React Context.",
+    points: [
+      {
+        lead: "Accounts.",
+        text:
+          "Sign in with email or Google, with a protected customer dashboard for orders, body measurements, shipping addresses and a wishlist.",
+      },
+      {
+        lead: "Shop anywhere.",
+        text:
+          "Multi-currency pricing in £, $, C$ and ₦, dark mode, and a custom luxury design system, fully responsive.",
+      },
+      {
+        lead: "Admin side.",
+        text: "A separate admin area for managing the catalog.",
+      },
+    ],
+  },
+  {
     id: "client-sites",
     title: "Client web applications",
     scope: "CLIENT WORK",
@@ -227,7 +278,11 @@ export const SKILLS: SkillGroup[] = [
     name: "Interface",
     items: ["MUI", "Tailwind CSS", "Emotion", "styled-components", "Framer Motion", "dnd-kit"],
   },
-  { name: "State and data", items: ["TanStack Query", "Axios", "REST APIs"] },
+  { name: "State and data", items: ["TanStack Query", "Context API", "Axios", "REST APIs"] },
+  {
+    name: "Backend",
+    items: ["Node.js (serverless)", "PostgreSQL (Neon)", "REST APIs", "Auth", "Paystack", "CMS / Admin"],
+  },
   {
     name: "Practice",
     items: ["Responsive design", "Web performance", "Accessibility", "Code review", "Git", "ESLint"],
